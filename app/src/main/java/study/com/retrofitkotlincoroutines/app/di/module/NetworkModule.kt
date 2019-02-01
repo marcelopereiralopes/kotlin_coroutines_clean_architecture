@@ -37,6 +37,7 @@ object NetworkModule {
             val newUrl = chain.request().url()
                 .newBuilder()
                 .addQueryParameter("api_key", "b5be56133f7886d4a3969ab00c113a47")
+                .addQueryParameter("page", "2")
                 .build()
 
             val newRequest = chain.request()

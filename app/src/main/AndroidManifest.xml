@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="study.com.retrofitkotlincoroutines">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:name=".RetrofitKotlinCoroutinesApp"
             android:allowBackup="true"

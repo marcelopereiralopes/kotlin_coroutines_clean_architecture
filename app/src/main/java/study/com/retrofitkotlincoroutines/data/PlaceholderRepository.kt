@@ -1,5 +1,9 @@
 package study.com.retrofitkotlincoroutines.data
 
+import android.util.Log
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import study.com.retrofitkotlincoroutines.data.service.PlaceholderApi
 import study.com.retrofitkotlincoroutines.domain.PlaceholderPhotos
 import study.com.retrofitkotlincoroutines.domain.PlaceholderPosts
@@ -17,6 +21,27 @@ class PlaceholderRepository @Inject constructor(val placeholderApi: PlaceholderA
         return listOf()
     }
     fun getPhotos(): List<PlaceholderPhotos>{
-        return listOf()
+
+        var result = mutableListOf<PlaceholderPhotos>()
+
+        runBlocking {
+
+            val job = GlobalScope.launch {
+
+                val request = placeholderApi.getPhotos()
+
+                try {
+                    val response = request.await()
+                    if (response.isSuccessful){
+                        result = response.body() as MutableList<PlaceholderPhotos>
+                    }
+                }catch (e: Exception){
+                    Log.d("PlaceholderRepository", "Operation fail ${e.message}")
+                }
+            }
+            job.join()
+        }
+
+        return result
     }
 }

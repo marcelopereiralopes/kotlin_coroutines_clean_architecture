@@ -1,7 +1,9 @@
 package study.com.retrofitkotlincoroutines.app
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_main.*
 import study.com.retrofitkotlincoroutines.R
 import study.com.retrofitkotlincoroutines.RetrofitKotlinCoroutinesApp
 import study.com.retrofitkotlincoroutines.domain.PlaceholderPhotos
@@ -23,22 +25,17 @@ class MainActivity : AppCompatActivity(), MainView {
 
         mainPresenter.attachView(this)
 
-        mainPresenter.getPosts()
-    }
-
-    override fun updatePosts(list: List<PlaceholderPosts>) {
-        mainPresenter.getPosts()
-    }
-
-    override fun updateUsers(list: List<PlaceholderUsers>) {
-        mainPresenter.getUsers()
-    }
-
-    override fun updatePhotos(list: List<PlaceholderPhotos>) {
         mainPresenter.getPhotos()
     }
 
-    override fun updatePopularMovies(list: List<TmdbMovie>) {
-        mainPresenter.getPopularMovie()
+    override fun updatePhotos(list: List<PlaceholderPhotos>?) {
+        if (list != null && list.isNotEmpty())
+            Picasso.get().load(list.last().url).into(imageView)
     }
+
+    override fun updatePosts(list: List<PlaceholderPosts>?) {}
+
+    override fun updateUsers(list: List<PlaceholderUsers>?) {}
+
+    override fun updatePopularMovies(list: List<TmdbMovie>?) {}
 }
